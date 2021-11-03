@@ -1,5 +1,5 @@
-# entropy
-Codes to use information entropy to quantify convective organization:
+## An Information Entropy Metric for Convective Organization
+### Codes to use information entropy to quantify convective organization:
 
 *entropy.m* - a MATLAB code to test entropy calculation on randomly-generated matrices using the checkerboard function
 
@@ -15,7 +15,7 @@ Codes to use information entropy to quantify convective organization:
 
 *submit_entropy.sh* - a sample script to compile and execute the entropy algorithm on Habanero
 
-Some extra non-code resources:
+### Some extra non-code resources:
 
 *entropy-schematic.pdf* - a visualization of the algorithm to calculate entropy
 
