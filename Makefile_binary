@@ -1,0 +1,42 @@
+#MF=Makefile
+#LFLAGS=	$(FFLAGS)
+#EXE=entropy_driver
+#SRC=entropy_driver.f90
+
+objects = entropy_driver.o entropy_profile_binary.o
+comp = gfortran # ifort   # mpif90
+# ifort flags:
+#fflags = -O3 -I/rigel/opt/netcdf-gfortran-4.4.4/include -traceback -g #-fopenmp
+# gfortran flags:
+fflags = -Og -Wall -fbounds-check -I/rigel/home/scs2229/top-secret/netcdf/include -fbacktrace -g
+#nclib = -L/rigel/opt/netcdf-gfortran-4.4.4/lib -lnetcdff
+nclib = -L/rigel/home/scs2229/top-secret/netcdf/lib -lnetcdff
+
+entropy_driver: $(objects)
+	$(comp) $(fflags) -o entropy_driver $(objects) $(nclib)
+entropy_profile_binary.mod: entropy_profile_binary.o entropy_profile_binary.f90
+	$(comp) $(fflags) -c entropy_profile_binary.f90 $(nclib)
+entropy_profile_binary.o: entropy_profile_binary.f90
+	$(comp) $(fflags) -c entropy_profile_binary.f90 $(nclib)
+entropy_driver.o: entropy_profile_binary.mod entropy_driver.f90 
+	$(comp) $(fflags) -c entropy_driver.f90 $(nclib)
+clean:
+	rm entropy_profile_binary.mod $(objects) entropy_driver
+
+#.SUFFIXES:
+#.SUFFIXES: .f90 .o
+#
+#OBJ=	$(SRC:.f90=.o)
+#
+#.f90.o:
+#	$(FC) $(FFLAGS) -c $<
+#
+#all:	$(EXE)
+#
+#$(EXE):	$(OBJ)
+#	$(FC) $(FFLAGS) -o $@ $(OBJ) $(LFLAGS)
+#
+#$(OBJ):	$(MF)
+#
+#clean:
+#       rm -f $(OBJ) $(EXE) core
